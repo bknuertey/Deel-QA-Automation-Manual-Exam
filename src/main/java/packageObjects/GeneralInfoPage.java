@@ -3,18 +3,15 @@ package packageObjects;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
-import java.util.*;
-import java.time.LocalDate;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+
 
 
 public class GeneralInfoPage {
@@ -86,12 +83,31 @@ public class GeneralInfoPage {
 
     public void chooseDate() throws InterruptedException
     {
-        //open the date picker
+        //get the date of previous day
+        LocalDateTime previousDayOfMonth = LocalDateTime.now().minusDays(1);
+
+        //format date into short month name, single day and full year
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL d, yyyy");
+
+        //convert date into string, it will display Jul 9,2021
+        String formattedDate = previousDayOfMonth.format(formatter);
+
+        //click on dropdown arrow in the date field
         driver.findElement(By.cssSelector(".chevron svg")).click();
 
-        //choose a date
-        driver.findElement(By.cssSelector(".react-calendar__tile:nth-child(9) > abbr")).click();
-        Thread.sleep(1000);
+        //initiate javascript executor to scroll to bottom of page
+        JavascriptExecutor a = ((JavascriptExecutor)driver);
+
+        //initiate javascript executor to click on date
+        JavascriptExecutor b = ((JavascriptExecutor)driver);
+
+        //scroll to bottom of page
+        a.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+
+        //click on date of previous day using string from formattedDate
+        b.executeScript("arguments[0].click();", driver.findElement(By.xpath("//abbr[@aria-label='"+formattedDate+ "']")));
+
+        Thread.sleep(2000);
     }
 
     public PaymentDetails clickNextButton()

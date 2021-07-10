@@ -26,17 +26,17 @@ public class CompliancePage {
 
         //select USA
         driver.findElement(country).click();
+        Thread.sleep(500);
     }
 
     public void selectState() throws InterruptedException
     {
-        Thread.sleep(1000);
-
         //click on state field
         driver.findElement(By.cssSelector(".flex:nth-child(1) > .select")).click();
 
         //select Colorado
         driver.findElement(state).click();
+        Thread.sleep(500);
     }
 
     public void clickCreateContract() throws InterruptedException

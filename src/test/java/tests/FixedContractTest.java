@@ -3,6 +3,7 @@ package tests;
 import org.testng.annotations.Test;
 import setup.SetupTests;
 
+
 public class FixedContractTest extends SetupTests {
 
     @Test

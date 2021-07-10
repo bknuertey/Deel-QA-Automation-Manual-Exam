@@ -30,12 +30,14 @@ public class PaymentDetails {
     {
         driver.findElement(currencyDropDown).click();
         driver.findElement(currency).click();
+        Thread.sleep(500);
     }
 
     public void selectPaymentFrequency() throws InterruptedException
     {
         driver.findElement(billDateDropDown).click();
         driver.findElement(billDate).click();
+        Thread.sleep(500);
     }
 
     public void clickNextButton() throws InterruptedException

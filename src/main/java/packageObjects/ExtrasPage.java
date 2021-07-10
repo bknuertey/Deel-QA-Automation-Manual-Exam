@@ -16,6 +16,7 @@ public class ExtrasPage {
     public void selectClause() throws InterruptedException
     {
         driver.findElement(clause).click();
+        Thread.sleep(500);
     }
 
     public void enterClauseText(String ctext) throws InterruptedException
