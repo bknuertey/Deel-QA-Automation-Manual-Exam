@@ -31,7 +31,9 @@ public class GeneralInfoPage {
 
     public void closeModal() throws InterruptedException
     {
-        Thread.sleep(1000);
+        //wait for modal to show up then close it
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(Modal));
 
         //use webelement to find and switch to the modal
         WebElement getModal = driver.findElement(Modal);
@@ -89,7 +91,7 @@ public class GeneralInfoPage {
         //format date into short month name, single day and full year
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("LLLL d, yyyy");
 
-        //convert date into string, it will display Jul 9,2021
+        //convert date into string, it will display in this format short month name day, year
         String formattedDate = previousDayOfMonth.format(formatter);
 
         //click on dropdown arrow in the date field
@@ -99,15 +101,19 @@ public class GeneralInfoPage {
         JavascriptExecutor a = ((JavascriptExecutor)driver);
 
         //initiate javascript executor to click on date
-        JavascriptExecutor b = ((JavascriptExecutor)driver);
+        //JavascriptExecutor b = ((JavascriptExecutor)driver);
 
         //scroll to bottom of page
         a.executeScript("window.scrollTo(0,document.body.scrollHeight)");
 
-        //click on date of previous day using string from formattedDate
-        b.executeScript("arguments[0].click();", driver.findElement(By.xpath("//abbr[@aria-label='"+formattedDate+ "']")));
+        //This is my first solution which works as well but is not native
+        // click on date of previous day using string from formattedDate
+        //b.executeScript("arguments[0].click();", driver.findElement(By.xpath("//abbr[@aria-label='"+formattedDate+ "']")));
 
-        Thread.sleep(2000);
+        //This is my preferred solution as it is native
+        driver.findElement(By.xpath("//abbr[@aria-label='"+formattedDate+ "']")).click();
+
+        Thread.sleep(1000);
     }
 
     public PaymentDetails clickNextButton()
